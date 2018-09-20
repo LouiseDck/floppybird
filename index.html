@@ -32,12 +32,26 @@
       <meta property="og:image" content="http://nebez.github.io/floppybird/assets/thumb.png" />
       <meta property="og:url" content="http://nebez.github.io/floppybird/" />
       <meta property="og:site_name" content="Floppy Bird" />
-      
+
+       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
       <!-- Style sheets -->
       <link href="css/reset.css" rel="stylesheet">
       <link href="css/main.css" rel="stylesheet">
    </head>
    <body>
+    <div class="modal" tabindex="-1" role="dialog" id="login">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+              <input type="text" class="form-control" id="username" onkeyup="stoppedTyping()" placeholder="Enter name" >
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="verify()" id="login_button" disabled>Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
       <div id="gamecontainer">
          <div id="gamescreen">
             <div id="sky" class="animated">
@@ -54,9 +68,11 @@
                      <div id="medal"></div>
                      <div id="currentscore"></div>
                      <div id="highscore"></div>
-                     <input placeholder="Enter username" type="text" id="name">
                      <div id="replay"><img src="assets/replay.png" alt="replay"></div>
-                      <a href="http://127.0.0.1:5000/scores"> <div id="highscores"><img src="assets/replay.png" alt="replay"></div> </a>
+                      <div id="highscores">
+                      <a href="http://127.0.0.1:5000/scores" target="_blank">
+                          <img src="assets/replay.png" alt="replay">
+                      </a></div>
 
                   </div>
                   
@@ -78,5 +94,8 @@
       <script src="js/jquery.transit.min.js"></script>
       <script src="js/buzz.min.js"></script>
       <script src="js/main.js"></script>
+        <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
+       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
    </body>
 </html>

@@ -37,6 +37,8 @@ var flyArea = $("#flyarea").height();
 var score = 0;
 var highscore = 0;
 
+var username = "";
+
 var pipeheight = 90;
 var pipewidth = 52;
 var pipes = new Array();
@@ -67,9 +69,32 @@ $(document).ready(function() {
     if(savedscore != "")
         highscore = parseInt(savedscore);
 
-    //start with the splash screen
-    showSplash();
+    $('#login').modal({backdrop: 'static', keyboard: false, show: true});
+
+    $('#login').on('hidden.bs.modal', function (e) {
+        //start with the splash screen
+        showSplash();
+    })
+
+
 });
+
+function stoppedTyping(){
+    if($('#username').val.length > 0) {
+        $('#login_button').prop('disabled', false);
+    } else {
+        $('#login_button').prop('disabled', true);
+    }
+}
+
+function verify(){
+    if($('#username').val.length <= 0) {
+        alert("Please enter a name")
+    } else {
+        username = $('#username').val();
+        $('#login').modal('hide');
+    }
+}
 
 function getCookie(cname)
 {
@@ -392,7 +417,10 @@ function showScore()
     //remove the big score
     setBigScore(true);
 
-
+    var xh = new XMLHttpRequest();
+    xh.open("POST", baselink + "scores", true);
+    xh.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xh.send("name=" + username + "&score=" + score);
 
     //have they beaten their high score?
     if(score > highscore)
@@ -440,14 +468,9 @@ function showScore()
 $("#replay").click(function() {
 
     // Check if name is filled in
-    if($("#name").val() !== ""){
+    // if($("#name").val() !== ""){
 
-        var name = $("#name").val();
-
-        var xh = new XMLHttpRequest();
-        xh.open("POST", baselink + "scores", true);
-        xh.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xh.send("name=" + name + "&score=" + score);
+        // var name = $("#name").val();
 
         //make sure we can only click once
         if(!replayclickable)
@@ -466,9 +489,9 @@ $("#replay").click(function() {
             //start the game over!
             showSplash();
         });
-    } else {
-        alert("Please fill in your name.")
-    }
+    // } else {
+    //     alert("Please fill in your name.")
+    // }
 });
 
 function playerScore()
