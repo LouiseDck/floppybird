@@ -5,11 +5,14 @@ from flask import session
 
 from datetime import datetime, timedelta
 
+# seconds to count down
+PLAYTIME=120
+
 app = Flask(__name__)
 app.secret_key = b'super_secret_stuff2'
 
 scores = dict()
-endtime = datetime.now() + timedelta(seconds=300)
+endtime = datetime.now() + timedelta(seconds=PLAYTIME)
 
 
 @app.route('/intro/')
@@ -32,7 +35,10 @@ def get_scores():
 def post_score():
     new_score = request.form['score']
     name = request.form['name']
-    if name in scores and scores[name] < int(new_score):
+    if name in scores:
+        if scores[name] < int(new_score):
+            scores[name] = int(new_score)
+    else:
         scores[name] = int(new_score)
     return '', 201
 
@@ -42,7 +48,7 @@ def seconds_until_end():
 
 @app.route('/intro/start', methods=["POST"])
 def start_timer():
-    endtime = datetime.now() + timedelta(seconds=120)
+    endtime = datetime.now() + timedelta(seconds=PLAYTIME)
     return str(seconds_until_end()), 201
 
 @app.route('/intro/seconds_left', methods=["GET"])
