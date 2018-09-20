@@ -8,7 +8,7 @@ from flask import session
 from datetime import datetime, timedelta
 
 # seconds to count down
-PLAYTIME=10
+PLAYTIME=120
 
 app = Flask(__name__, static_folder='public')
 app.secret_key = b'super_secret_stuff2'
