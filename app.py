@@ -21,16 +21,34 @@ endtime = datetime.now() + timedelta(seconds=PLAYTIME)
 
 @app.route('/intro/scores', methods=["GET"])
 def get_scores():
+    # scores = {'ding': 0, 'ander':10}
     sorted_scores = sorted(scores.items(), key=lambda e: -e[1])[:10]
     left = int(seconds_until_end())
     sstring = "<html><head><title>" + str(left) + "</title>"
+    sstring += "<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" \
+               "\"> <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js\"></script> " \
+               "<script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js\"></script> "
     if left > 0:
         sstring += "<meta http-equiv='refresh' content='1'>"
-    sstring += "</head><body><table>"
-    for score in sorted_scores:
-        sstring += "<tr><td>" + str(score[0])
-        sstring += "</td><td>" + str(score[1]) + "</td>"
-    sstring += "</table></body></html>"
+    sstring += "</head><body>"
+    if len(sorted_scores) > 0:
+        cur_win = sorted_scores[0][0]
+    else:
+        cur_win = "No one"
+    sstring += "<div class=\"jumbotron jumbotron-fluid\">" \
+                "<div class=\"container\">" \
+                "<h1 class=\"display-4\">Current winner: " + str(cur_win) + "</h1>" \
+                "</div>" \
+                "</div>"
+
+    sstring += "<table class=\"table table-striped\">"
+    sstring += "<thead class=\"thead-dark\"> <tr> <th scope=\"col\">#</th> <th scope=\"col\">Name</th><th scope=\"col\">Score</th></tr> </thead> <tbody>"
+    for c, score in enumerate(sorted_scores):
+        sstring += "<tr><th scope=\"row\">" + str(c) + "</th>"
+        # sstring += "<tr><td>" + str(c)
+        sstring += "</td><td>" + str(score[0]) + "</td>"
+        sstring += "</td><td>" + str(score[1]) + "</td></tr>"
+    sstring += "</tbody></table></body></html>"
     return sstring
 
 

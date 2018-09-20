@@ -107,11 +107,12 @@ function stoppedTyping(){
 }
 
 function verify(){
-    if($('#username').val.length <= 0) {
-        alert("Please enter a name")
+    var uname = $('#username').val();
+    uname = uname.replace(/\s/g,'');
+    if(uname.length <= 0) {
+        alert("Please enter a valid name")
     } else {
-        un = $('#username').val();
-        username = un.replace(/[^a-z0-9 \.,_-]/gim,"");
+        username = uname.replace(/[^a-z0-9 \.,_-]/gim,"");
         $('#login').modal('hide');
     }
 }
