@@ -306,10 +306,14 @@ Screen - Game
    position: absolute;
    opacity: 0;
    top: 280px;
-   left: 61px;
+   left: 67px;
    height: 70px;
    width: 115px;
    cursor: pointer;
+}
+
+#hsimg{
+    width: 102px;
 }
 
 .boundingbox
