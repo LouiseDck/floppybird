@@ -8,16 +8,13 @@ from datetime import datetime, timedelta
 # seconds to count down
 PLAYTIME=120
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='public')
 app.secret_key = b'super_secret_stuff2'
 
 scores = dict()
 endtime = datetime.now() + timedelta(seconds=PLAYTIME)
 
 
-@app.route('/intro/')
-def hello_world():
-    return 'Hello World!'
 
 
 @app.route('/intro/scores', methods=["GET"])
@@ -65,6 +62,11 @@ def secret_start():
 @app.route('/intro/game', methods=["GET"])
 def get_game():
     return send_file('data/index.html', as_attachment=True)
+
+@app.route('/intro/<path:path>')
+def static_proxy(path):
+  # send_static_file will guess the correct MIME type
+  return app.send_static_file(path)
 
 
 if __name__ == '__main__':
