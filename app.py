@@ -32,7 +32,6 @@ def post_score():
     new_score = request.form['score']
     name = request.form['name']
     scores[name] = int(new_score)
-    session['scores'] = scores
     return '', 201
 
 
