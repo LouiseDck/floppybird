@@ -11,12 +11,12 @@ scores = dict()
 endtime = 0
 
 
-@app.route('/')
+@app.route('/intro/')
 def hello_world():
     return 'Hello World!'
 
 
-@app.route('/scores', methods=["GET"])
+@app.route('/intro/scores', methods=["GET"])
 def get_scores():
     sorted_scores = sorted(scores.items(), key=lambda e: -e[1])[:10]
     sstring = "<table>"
@@ -27,22 +27,21 @@ def get_scores():
     return sstring
 
 
-@app.route('/scores', methods=["POST"])
+@app.route('/intro/scores', methods=["POST"])
 def post_score():
     new_score = request.form['score']
     name = request.form['name']
     scores[name] = int(new_score)
-    session['scores'] = scores
     return '', 201
 
 
-@app.route('/start', methods=["POST"])
+@app.route('/intro/start', methods=["POST"])
 def start_timer():
     endtime = datetime.now()
     return 0
 
 
-@app.route('/game', methods=["GET"])
+@app.route('/intro/game', methods=["GET"])
 def get_game():
     return send_file('data/index.html', as_attachment=True)
 
