@@ -9,7 +9,7 @@ app = Flask(__name__)
 app.secret_key = b'super_secret_stuff2'
 
 scores = dict()
-endtime = datetime.utcnow() + timedelta(seconds=300)
+endtime = datetime.now() + timedelta(seconds=300)
 
 
 @app.route('/intro/')
@@ -37,14 +37,17 @@ def post_score():
     return '', 201
 
 
+def seconds_until_end():
+    return max((endtime - datetime.now()).total_seconds(), 0.0)
+
 @app.route('/intro/start', methods=["POST"])
 def start_timer():
     endtime = datetime.now() + timedelta(seconds=120)
-    return 0
+    return str(seconds_until_end()), 201
 
 @app.route('/intro/seconds_left', methods=["GET"])
 def seconds_left():
-    return min((endtime - datetime.now()).total_seconds(), 0)
+    return str(seconds_until_end()), 200
 
 
 @app.route('/intro/game', methods=["GET"])
