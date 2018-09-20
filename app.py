@@ -8,7 +8,7 @@ from flask import session
 from datetime import datetime, timedelta
 
 # seconds to count down
-PLAYTIME=120
+PLAYTIME=10
 
 app = Flask(__name__, static_folder='public')
 app.secret_key = b'super_secret_stuff2'
@@ -22,7 +22,11 @@ endtime = datetime.now() + timedelta(seconds=PLAYTIME)
 @app.route('/intro/scores', methods=["GET"])
 def get_scores():
     sorted_scores = sorted(scores.items(), key=lambda e: -e[1])[:10]
-    sstring = "<html><head><title>StuW Introdag Scores</title><meta http-equiv='refresh' content='1'></meta></head><body><table>"
+    left = int(seconds_until_end())
+    sstring = "<html><head><title>" + str(left) + "</title>"
+    if left > 0:
+        sstring += "<meta http-equiv='refresh' content='1'>"
+    sstring += "</head><body><table>"
     for score in sorted_scores:
         sstring += "<tr><td>" + str(score[0])
         sstring += "</td><td>" + str(score[1]) + "</td>"
