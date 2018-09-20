@@ -17,6 +17,25 @@
 
 var baselink = "/intro/";
 
+var default_playtime = 5 * 60 * 1000; // 5 minutes
+
+function gameOver(){
+  location.href = "https://stuw.ugent.be";
+}
+
+var endtime = Date.now() + default_playtime;
+$.get(baselink + 'seconds_left', function(result){
+  var seconds_left = parseFloat(result);
+  if(seconds_left > 1){
+    console.log("Seconds left: " + seconds_left);
+    setInterval(gameOver, Math.round(seconds_left*1000));
+  } else {
+    console.log("Game ended " + seconds_left);
+    gameOver();
+  }
+});
+
+
 var debugmode = false;
 
 var states = Object.freeze({
