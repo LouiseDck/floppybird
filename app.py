@@ -31,7 +31,8 @@ def get_scores():
 def post_score():
     new_score = request.form['score']
     name = request.form['name']
-    scores[name] = int(new_score)
+    if name in scores and scores[name] < int(new_score):
+        scores[name] = int(new_score)
     return '', 201
 
 
