@@ -1,14 +1,15 @@
+#!/bin/python3
 from flask import Flask, send_from_directory, send_file
 from flask import request
 from flask import session
 
-from datetime import datetime
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 app.secret_key = b'super_secret_stuff2'
 
 scores = dict()
-endtime = 0
+endtime = datetime.utcnow() + timedelta(seconds=300)
 
 
 @app.route('/intro/')
@@ -38,8 +39,12 @@ def post_score():
 
 @app.route('/intro/start', methods=["POST"])
 def start_timer():
-    endtime = datetime.now()
+    endtime = datetime.now() + timedelta(seconds=120)
     return 0
+
+@app.route('/intro/seconds_left', methods=["GET"])
+def seconds_left():
+    return min((endtime - datetime.now()).total_seconds(), 0)
 
 
 @app.route('/intro/game', methods=["GET"])
