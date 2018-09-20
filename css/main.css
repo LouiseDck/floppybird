@@ -296,8 +296,19 @@ Screen - Game
    opacity: 0;
    top: 205px;
    left: 61px;
-   height: 115px;
-   width: 70px;
+   height: 70px;
+   width: 115px;
+   cursor: pointer;
+}
+
+#highscores
+{
+   position: absolute;
+   opacity: 0;
+   top: 280px;
+   left: 61px;
+   height: 70px;
+   width: 115px;
    cursor: pointer;
 }
 
