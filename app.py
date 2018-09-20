@@ -30,6 +30,8 @@ def get_scores():
                "<script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js\"></script> "
     if left > 0:
         sstring += "<meta http-equiv='refresh' content='1'>"
+    else:
+        sstring += "<meta http-equiv='refresh' content='5;url=https://stuw.ugent.be'>"
     sstring += "</head><body>"
     if len(sorted_scores) > 0:
         cur_win = sorted_scores[0][0]
