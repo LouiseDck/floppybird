@@ -275,6 +275,16 @@ Screen - Game
    text-align: right;
 }
 
+#name
+{
+   position: absolute;
+   top: 163px;
+   left: 32px;
+   height: 14px;
+   width: 120px;
+   text-align: left;
+}
+
 #highscore img
 {
    padding-left: 2px;

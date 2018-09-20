@@ -89,8 +89,8 @@ function setCookie(cname,cvalue,exdays)
    document.cookie = cname + "=" + cvalue + "; " + expires;
 }
 
-function showSplash()
-{
+function showSplash(){
+   // TODO: ask username
    currentstate = states.SplashScreen;
    
    //set the defaults (again)
@@ -118,8 +118,7 @@ function showSplash()
    $("#splash").transition({ opacity: 1 }, 2000, 'ease');
 }
 
-function startGame()
-{
+function startGame(){
    currentstate = states.GameScreen;
    
    //fade out the splash
@@ -145,8 +144,7 @@ function startGame()
    playerJump();
 }
 
-function updatePlayer(player)
-{
+function updatePlayer(player){
    //rotation
    rotation = Math.min((velocity / 10) * 90, 90);
    
@@ -255,9 +253,9 @@ $(document).keydown(function(e){
    if(e.keyCode == 32)
    {
       //in ScoreScreen, hitting space should click the "replay" button. else it's just a regular spacebar hit
-      if(currentstate == states.ScoreScreen)
-         $("#replay").click();
-      else
+      // if(currentstate == states.ScoreScreen)
+         // $("#replay").click();
+      // else
          screenClick();
    }
 });
@@ -385,11 +383,14 @@ function playerDead()
 
 function showScore()
 {
+   // TODO: update score -> send to server
+   // TODO: new screen -> show highscores
    //unhide us
    $("#scoreboard").css("display", "block");
-   
    //remove the big score
    setBigScore(true);
+
+
    
    //have they beaten their high score?
    if(score > highscore)
@@ -424,6 +425,7 @@ function showScore()
          $("#medal").css({ scale: 2, opacity: 0 });
          $("#medal").transition({ opacity: 1, scale: 1 }, 1200, 'ease');
       }
+
    });
    
    //make the replay button clickable
@@ -431,23 +433,37 @@ function showScore()
 }
 
 $("#replay").click(function() {
-   //make sure we can only click once
-   if(!replayclickable)
-      return;
-   else
-      replayclickable = false;
-   //SWOOSH!
-   soundSwoosh.stop();
-   soundSwoosh.play();
-   
-   //fade out the scoreboard
-   $("#scoreboard").transition({ y: '-40px', opacity: 0}, 1000, 'ease', function() {
-      //when that's done, display us back to nothing
-      $("#scoreboard").css("display", "none");
+
+   // Check if name is filled in
+   if($("#name").val() != ""){
+
+      var name = $("#name").val()
+
+      var xh = new XMLHttpRequest();
+      xh.open("POST", "http://127.0.0.1:5000/scores", true);
+      xh.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      xh.send("name=" + name + "&score=" + score);
+
+      //make sure we can only click once
+      if(!replayclickable)
+         return;
+      else
+         replayclickable = false;
+      //SWOOSH!
+      soundSwoosh.stop();
+      soundSwoosh.play();
       
-      //start the game over!
-      showSplash();
-   });
+      //fade out the scoreboard
+      $("#scoreboard").transition({ y: '-40px', opacity: 0}, 1000, 'ease', function() {
+         //when that's done, display us back to nothing
+         $("#scoreboard").css("display", "none");
+         
+         //start the game over!
+         showSplash();
+      });
+   } else {
+      alert("Please fill in your name.")
+   }
 });
 
 function playerScore()
