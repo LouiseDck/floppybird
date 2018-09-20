@@ -13,7 +13,7 @@ PLAYTIME=120
 app = Flask(__name__, static_folder='public')
 app.secret_key = b'super_secret_stuff2'
 
-scores = dict()
+scores = {"Rien": 3}
 endtime = datetime.now() + timedelta(seconds=PLAYTIME)
 
 
