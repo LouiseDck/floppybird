@@ -37,8 +37,8 @@ def get_scores():
 def post_score():
     new_score = request.form['score']
     name = request.form['name']
-    name = re.sub('/[^a-z0-9 \.,_-]', "", name)
-    new_score = re.sub('/[^a-z0-9 \.,_-]', "", new_score)
+    name = re.sub('/[^a-zA-Z0-9 \.,_-]', "", name)
+    new_score = re.sub('/[^0-9 \.,_-]', "", new_score)
 
     if name in scores:
         if scores[name] < int(new_score):
@@ -48,7 +48,7 @@ def post_score():
     return '', 201
 
 
-def seconds_until_end():
+def seconds_until_end():t
     return max((endtime - datetime.now()).total_seconds(), 0.0)
 
 @app.route('/intro/start', methods=["POST"])
