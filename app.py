@@ -27,6 +27,8 @@ def get_scores():
                "<script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js\"></script> "
     if left > 0:
         sstring += "<meta http-equiv='refresh' content='1'>"
+    else:
+        sstring += "<meta http-equiv='refresh' content='5;url=https://stuw.ugent.be'>"
     sstring += "</head><body>"
     if len(sorted_scores) > 0:
         cur_win = sorted_scores[0][0]
@@ -34,12 +36,13 @@ def get_scores():
         cur_win = "No one"
     sstring += "<div class=\"jumbotron jumbotron-fluid\">" \
                 "<div class=\"container\">" \
-                "<h1 class=\"display-4\">Current winner: " + str(cur_win) + "</h1>" \
+                "<h1 class=\"display-1\">Speel mee op <a>https://stuw.ugent.be/intro/</a></h1>" \
+                "<h1 class=\"display-4\">Huidige winnaar: " + str(cur_win) + "</h1>" \
                 "</div>" \
                 "</div>"
 
     sstring += "<table class=\"table table-striped\">"
-    sstring += "<thead class=\"thead-dark\"> <tr> <th scope=\"col\">#</th> <th scope=\"col\">Name</th><th scope=\"col\">Score</th></tr> </thead> <tbody>"
+    sstring += "<thead class=\"thead-dark\"> <tr> <th scope=\"col\">#</th> <th scope=\"col\">Naam</th><th scope=\"col\">Score</th></tr> </thead> <tbody>"
     for c, score in enumerate(sorted_scores):
         sstring += "<tr><th scope=\"row\">" + str(c) + "</th>"
         # sstring += "<tr><td>" + str(c)
