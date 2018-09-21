@@ -91,7 +91,8 @@ function verify(){
     if($('#username').val.length <= 0) {
         alert("Please enter a name")
     } else {
-        username = $('#username').val();
+        un = $('#username').val();
+        username = un.replace(/[^a-z0-9 \.,_-]/gim,"");
         $('#login').modal('hide');
     }
 }

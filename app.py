@@ -1,4 +1,6 @@
 #!/bin/python3
+import re
+
 from flask import Flask, send_from_directory, send_file
 from flask import request
 from flask import session
@@ -35,6 +37,9 @@ def get_scores():
 def post_score():
     new_score = request.form['score']
     name = request.form['name']
+    name = re.sub('/[^a-z0-9 \.,_-]', "", name)
+    new_score = re.sub('/[^a-z0-9 \.,_-]', "", new_score)
+
     if name in scores:
         if scores[name] < int(new_score):
             scores[name] = int(new_score)
