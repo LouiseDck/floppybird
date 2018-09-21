@@ -13,11 +13,8 @@ PLAYTIME=120
 app = Flask(__name__, static_folder='public')
 app.secret_key = b'super_secret_stuff2'
 
-scores = {"Rien": 3}
+scores = {"Rien": 3, "Sven": 4, "Louise": 6}
 endtime = datetime.now() + timedelta(seconds=PLAYTIME)
-
-
-
 
 @app.route('/intro/scores', methods=["GET"])
 def get_scores():
