@@ -38,6 +38,7 @@ def post_score():
     new_score = request.form['score']
     name = request.form['name']
     name = re.sub('/[^a-zA-Z0-9 \.,_-]', "", name)
+    name = name[:64]
     new_score = re.sub('/[^0-9 \.,_-]', "", new_score)
 
     if name in scores:
@@ -48,7 +49,7 @@ def post_score():
     return '', 201
 
 
-def seconds_until_end():t
+def seconds_until_end():
     return max((endtime - datetime.now()).total_seconds(), 0.0)
 
 @app.route('/intro/start', methods=["POST"])
